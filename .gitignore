@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
+debug.log
+.eslintcache
+yarn.lock
+src/App.css
+src/index.css
