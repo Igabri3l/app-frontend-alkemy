@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export default class CreateRecord extends Component {
 
@@ -7,12 +9,12 @@ export default class CreateRecord extends Component {
         username: 'alfredo',
         concepto:'',
         monto:'',
-        fecha:'',
+        fecha: new Date(),
         tipo:''
     }
 
     componentDidMount() {
-        this.setState({tipo: 'ingreso'})
+        this.setState({tipo: 'Ingreso'})
     }
 
     onSubmit = async (e) => {
@@ -25,8 +27,10 @@ export default class CreateRecord extends Component {
             fecha: this.state.fecha,
             tipo: this.state.tipo
         }
+
+        console.log(newRecord)
         const res = await axios.post('http://localhost:5000/api/registry', newRecord)
-        console.log(newRecord, res)
+        console.log(res)
 
         window.location.href="/"
     }
@@ -37,9 +41,9 @@ export default class CreateRecord extends Component {
         })
     }
 
-    // onChangeDate = (date) => {
-    //     this.setState({date})
-    // }
+    onChangeDate = (date) => {
+        this.setState({fecha : date})
+    }
 
     render() {
         return (
@@ -72,14 +76,10 @@ export default class CreateRecord extends Component {
                     </div>
                     
                     <div className="form-group">
-                        <input 
-                            type="text"
-                            className="form-control"
-                            placeholder="Fecha"
-                            name="fecha"
-                            onChange={this.onInputChange}
-                            required
-                            value={this.state.fecha}
+                        <DatePicker
+                            className='form-control'
+                            selected={this.state.fecha}
+                            onChange={this.onChangeDate}
                         />
                     </div>
 
@@ -90,8 +90,8 @@ export default class CreateRecord extends Component {
                             onChange={this.onInputChange}
                             value={this.state.tipo}
                         >
-                            <option key="ingreso" value="ingreso" >Ingreso</option>
-                            <option key="egreso" value="egreso">Egreso</option>
+                            <option key="ingreso" value="Ingreso" >Ingreso</option>
+                            <option key="egreso" value="Egreso">Egreso</option>
                         </select>
                     </div>
 

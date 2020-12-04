@@ -8,7 +8,13 @@ export default class Egreso extends Component {
 
     async componentDidMount(){
         const res = await axios.get('http://localhost:5000/api/registry')
-        this.setState({records: res.data})
+        const egreso = []
+        for (let idx = 0; idx < res.data.length; idx++) {
+            if (res.data[idx].tipo === 'Egreso') {
+                egreso[idx] = res.data[idx];
+            }
+        }
+        this.setState({records: egreso})
     }
 
     getRecords = async () => {

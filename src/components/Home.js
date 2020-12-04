@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {format} from 'timeago.js'
 
 export default class Home extends Component {
     state={
@@ -10,16 +11,26 @@ export default class Home extends Component {
 
     async componentDidMount() {
         let res = await axios.get('http://localhost:5000/api/registry')
-        this.setState({records: res.data})
+        if(res.data.length >10){
+            const limit = []
+            for (let idx = 0; idx < 10; idx++) {
+                limit[idx] = res.data[idx];
+            }
+            this.setState({records: limit})
+        } else {
+            this.setState({records: res.data})
+        }
+
         res = await axios.get('http://localhost:5000/api/userdata')
-        console.log(res.data[0])
         this.setState({balance: res.data[0].balance})
     }
 
     getRecords = async () => {
-        const res = await axios.get('http://localhost:5000/api/registry')
+        let res = await axios.get('http://localhost:5000/api/registry')
         this.setState({records: res.data})
-        
+        res = await axios.get('http://localhost:5000/api/userdata')
+        console.log(res.data[0])
+        this.setState({balance: res.data[0].balance})
     }
 
     DeleteRecords = async (id) => {
@@ -61,7 +72,7 @@ export default class Home extends Component {
                                         Monto: {record.monto}
                                     </p>
                                     <p>
-                                        Fecha: {record.fecha}
+                                        {format(record.fecha)}
                                     </p>
                                 </div>
                                 <div className="card-footer">

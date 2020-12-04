@@ -24,9 +24,7 @@ function App() {
           <Route path='/history/todos' component={Todos}></Route>
           <Route path='/history/ingreso' component={Ingreso}></Route>
           <Route path='/history/egreso' component={Egreso}></Route>
-
         </div>
-        
       </Router>
     </div>
   );
