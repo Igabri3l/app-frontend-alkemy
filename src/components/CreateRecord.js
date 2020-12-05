@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 export default class CreateRecord extends Component {
 
     state = {
-        username: 'alfredo',
         concepto:'',
         monto:'',
         fecha: new Date(),
@@ -21,7 +20,6 @@ export default class CreateRecord extends Component {
         e.preventDefault()
 
         const newRecord = {
-            username: this.state.username,
             concepto: this.state.concepto,
             monto: this.state.monto,
             fecha: this.state.fecha,

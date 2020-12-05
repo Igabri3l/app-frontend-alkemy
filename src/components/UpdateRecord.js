@@ -3,7 +3,6 @@ import axios from 'axios'
 
 export default class UpdateRecord extends Component {
     state = {
-        username: 'alfredo',
         concepto:'',
         monto:'',
         fecha:''
@@ -13,7 +12,6 @@ export default class UpdateRecord extends Component {
         const res = await axios.get('http://localhost:5000/api/registry/'+this.props.match.params.id )
         console.log(res.data)
         this.setState({
-            username: res.data.username,
             monto: res.data.monto,
             concepto: res.data.concepto,
             fecha: res.data.fecha,
@@ -24,7 +22,6 @@ export default class UpdateRecord extends Component {
         e.preventDefault()
 
         const newRecord = {
-            username: this.state.username,
             concepto: this.state.concepto,
             monto: this.state.monto,
             fecha: this.state.fecha

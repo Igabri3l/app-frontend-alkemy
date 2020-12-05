@@ -20,17 +20,37 @@ export default class Home extends Component {
         } else {
             this.setState({records: res.data})
         }
+        let balance = await this.reloadBalance(res.data)
 
-        res = await axios.get('http://localhost:5000/api/userdata')
-        this.setState({balance: res.data[0].balance})
+        this.setState({balance})
+    }
+
+    addAndRestBalance = (balance, tipo, monto) => {
+        if(tipo === 'Ingreso'){
+            console.log(balance)
+            balance = balance + monto
+            console.log(balance)
+        }else if(tipo === 'Egreso'){
+            balance = balance - monto
+        }
+        return balance
+    }
+
+    reloadBalance = async (records) => {
+        let balance = 0
+        for (let idx = 0; idx < records.length; idx++) {
+            const record = records[idx];
+            balance = await this.addAndRestBalance(balance, record.tipo, record.monto)
+        }
+        console.log(balance)
+        return balance
     }
 
     getRecords = async () => {
         let res = await axios.get('http://localhost:5000/api/registry')
         this.setState({records: res.data})
-        res = await axios.get('http://localhost:5000/api/userdata')
-        console.log(res.data[0])
-        this.setState({balance: res.data[0].balance})
+        let balance = await this.reloadBalance(res.data)
+        this.setState({balance})
     }
 
     DeleteRecords = async (id) => {
@@ -85,7 +105,7 @@ export default class Home extends Component {
                     ))
                 }
             </div>
-        
+
             </div>
         )
     }
