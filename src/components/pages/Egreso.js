@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Moment from 'moment'
+
 export default class Egreso extends Component {
     state = {
         records: []
@@ -42,7 +44,9 @@ export default class Egreso extends Component {
                                 Monto: {record.monto}
                             </p>
                             <p>
-                                Fecha: {record.fecha}
+                                Fecha: {
+                                    Moment(record.fecha).format('MMMM Do, YYYY')
+                                }
                             </p>
                             <p>
                                 Tipo: {record.tipo}
