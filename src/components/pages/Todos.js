@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Moment from 'moment'
+
 export default class Todos extends Component {
     state = {
         records: []
@@ -22,6 +24,8 @@ export default class Todos extends Component {
         this.getRecords()
     }
 
+    
+
     render() {
         return (
             <ul className="list-group list-group-flush">
@@ -35,7 +39,9 @@ export default class Todos extends Component {
                                 Monto: {record.monto}
                             </p>
                             <p>
-                                Fecha: {record.fecha}
+                                Fecha: {
+                                    Moment(record.fecha).format('MMMM Do, YYYY')
+                                }
                             </p>
                             <p>
                                 Tipo: {record.tipo}

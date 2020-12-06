@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export default class UpdateRecord extends Component {
     state = {
         concepto:'',
         monto:'',
-        fecha:''
+        fecha: new Date()
     }
     async componentDidMount() {
         
@@ -14,7 +16,7 @@ export default class UpdateRecord extends Component {
         this.setState({
             monto: res.data.monto,
             concepto: res.data.concepto,
-            fecha: res.data.fecha,
+            fecha: new Date(res.data.fecha),
             _id: this.props.match.params.id
             })
     }
@@ -36,6 +38,10 @@ export default class UpdateRecord extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+    }
+
+    onChangeDate = (date) => {
+        this.setState({fecha : date})
     }
 
     render() {
@@ -69,14 +75,10 @@ export default class UpdateRecord extends Component {
                     </div>
                     
                     <div className="form-group">
-                        <input 
-                            type="text"
-                            className="form-control"
-                            placeholder="Fecha"
-                            name="fecha"
-                            onChange={this.onInputChange}
-                            required
-                            value={this.state.fecha}
+                        <DatePicker
+                            className='form-control'
+                            selected={this.state.fecha}
+                            onChange={this.onChangeDate}
                         />
                     </div>
 
